@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Diagnostic Végétal V3</title>
+
+<style>
+body{font-family:Arial;background:#f4f6f4;margin:0;padding:40px;}
+.container{max-width:900px;margin:auto;background:white;padding:40px;border-radius:14px;box-shadow:0 15px 35px rgba(0,0,0,0.08);}
+h1{margin-top:0;color:#2e5e3a;}
+textarea{width:100%;padding:16px;border-radius:8px;border:1px solid #ddd;font-size:16px;margin-top:10px;}
+button{margin-top:20px;padding:14px 22px;background:#2e5e3a;color:white;border:none;border-radius:8px;font-size:16px;cursor:pointer;}
+button:hover{background:#204428;}
+.result{margin-top:35px;padding:25px;background:#fafafa;border-radius:10px;}
+.section{margin-top:25px;}
+.badge{display:inline-block;padding:6px 10px;background:#e7f0ea;border-radius:6px;font-size:13px;margin-bottom:10px;}
+.history{margin-top:40px;padding:20px;background:#f8f8f8;border-radius:10px;}
+.product{background:#eef5ef;padding:10px;border-radius:6px;margin-top:6px;}
+.consult{margin-top:30px;padding:20px;background:#f0f7f2;border-radius:10px;}
+
+.paywall{margin-top:30px;padding:22px;background:#f7fbf8;border:1px solid #dfe9e2;border-radius:12px;}
+.offer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px;}
+.offer-card{background:white;border:1px solid #dde7df;border-radius:12px;padding:16px;box-shadow:0 8px 20px rgba(0,0,0,.04);}
+.offer-title{font-size:18px;font-weight:700;color:#244a2f;margin:0 0 6px;}
+.offer-price{font-size:26px;font-weight:800;color:#2e5e3a;margin:0 0 8px;}
+.offer-desc{font-size:14px;line-height:1.5;color:#58635b;min-height:64px;}
+.link-btn{display:inline-block;text-decoration:none;margin-top:14px;padding:12px 16px;background:#2e5e3a;color:#fff;border-radius:8px;font-weight:700;}
+.link-btn.secondary{background:#7a8f80;}
+.small-note{font-size:13px;color:#6b746d;line-height:1.5;margin-top:10px;}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🌿 Diagnostic Végétal</h1>
+
+<p>Décris ton symptôme :</p>
+
+<textarea id="symptom" placeholder="ex : j’ai mal au ventre, je suis fatigué, j’ai des infections urinaires"></textarea>
+
+<button onclick="diagnose()">Analyser</button>
+
+<div id="result" class="result" style="display:none">
+
+<div class="badge" id="terrain"></div>
+
+<div class="section">
+<h3>🌿 Plantes recommandées</h3>
+<div id="plants"></div>
+</div>
+
+<div class="section">
+<h3>🥗 Conseils alimentaires</h3>
+<div id="food"></div>
+</div>
+
+<div class="section">
+<h3>🍵 Rituel / Infusion</h3>
+<div id="infusion"></div>
+</div>
+
+<div class="section">
+<h3>🛍 Produits Maison Yanna recommandés</h3>
+<div id="products"></div>
+</div>
+
+</div>
+
+
+<div class="paywall">
+<h3>💎 Aller plus loin avec Méthode Tee</h3>
+<p class="small-note">Le diagnostic reste gratuit. Si tu veux un accompagnement plus poussé, tu peux débloquer l’une de ces options :</p>
+
+<div class="offer-grid">
+  <div class="offer-card">
+    <p class="offer-title">Protocole végétal</p>
+    <p class="offer-price">5€</p>
+    <p class="offer-desc">Débloque un protocole ponctuel autour de la pharmacopée traditionnelle, avec recommandations végétales ciblées.</p>
+    <a class="link-btn" href="https://buy.stripe.com/14A3cvfQcauN5BM9P33Ru00" target="_blank" rel="noopener noreferrer">Obtenir le protocole</a>
+  </div>
+
+  <div class="offer-card">
+    <p class="offer-title">Consultation pharmacopée</p>
+    <p class="offer-price">49€</p>
+    <p class="offer-desc">Réserve un échange personnalisé avec Tee pour une approche plus précise selon ton terrain, ton rythme et tes besoins.</p>
+    <a class="link-btn" href="https://buy.stripe.com/28E4gz8nKdGZ9S21ix3Ru01" target="_blank" rel="noopener noreferrer">Réserver la consultation</a>
+  </div>
+
+  <div class="offer-card">
+    <p class="offer-title">Club Méthode Tee</p>
+    <p class="offer-price">15€/mois</p>
+    <p class="offer-desc">Accès mensuel aux rituels, diagnostics, recettes, plantes et conseils exclusifs dans l’univers Méthode Tee.</p>
+    <a class="link-btn" href="https://buy.stripe.com/7sY14n9rO32l0hs2mB3Ru02" target="_blank" rel="noopener noreferrer">Rejoindre le club</a>
+  </div>
+</div>
+</div>
+
+<div class="history">
+<h3>📜 Historique des diagnostics</h3>
+<ul id="history"></ul>
+</div>
+
+<div class="consult">
+<h3>👩‍⚕️ Consultation personnalisée</h3>
+<p>Besoin d’un accompagnement plus précis ? Tu peux réserver directement ta consultation pharmacopée avec Tee.</p>
+<a class="link-btn secondary" href="https://buy.stripe.com/28E4gz8nKdGZ9S21ix3Ru01" target="_blank" rel="noopener noreferrer">Réserver une consultation</a>
+</div>
+
+</div>
+
+<script>
+
+let historyData = JSON.parse(localStorage.getItem("diagnostic_history") || "[]")
+
+function updateHistory(){
+let list=document.getElementById("history")
+list.innerHTML=""
+historyData.forEach(item=>{
+let li=document.createElement("li")
+li.innerText=item
+list.appendChild(li)
+})
+}
+
+updateHistory()
+
+function diagnose(){
+
+let input=document.getElementById("symptom").value.toLowerCase()
+
+let terrain=""
+let plants=""
+let food=""
+let infusion=""
+let products=""
+
+if(input.includes("ventre") || input.includes("digestion")){
+terrain="Terrain digestif"
+plants="Fenouil, Menthe poivrée, Gingembre"
+food="Repas simples, légumes cuits"
+infusion="Infusion fenouil + menthe"
+products="<div class='product'>Infusion Fenouil Maison Yanna</div><div class='product'>Tisane Digestion Maison Yanna</div>"
+}
+
+else if(input.includes("fatigue")){
+terrain="Terrain vitalité basse"
+plants="Ortie, Ginseng, Ashwagandha"
+food="Fruits secs, dattes, protéines"
+infusion="Infusion ortie + gingembre"
+products="<div class='product'>Maté Boost Maison Yanna</div><div class='product'>Matcha Éclat Taïshan</div>"
+}
+
+else if(input.includes("urinaire") || input.includes("infection")){
+terrain="Terrain urinaire sensible"
+plants="Busserole, Canneberge, Queue de cerise"
+food="Hydratation importante"
+infusion="Infusion queues de cerise"
+products="<div class='product'>Queues de Cerise Maison Yanna</div><div class='product'>Infusion Cranberry</div>"
+}
+
+else if(input.includes("stress") || input.includes("sommeil")){
+terrain="Terrain nerveux"
+plants="Passiflore, Aubépine, Mélisse"
+food="Repas léger le soir"
+infusion="Infusion verveine + passiflore"
+products="<div class='product'>Infusion Lune Céleste Maison Yanna</div>"
+}
+
+else{
+terrain="Terrain général"
+plants="Ortie, Thym, Romarin"
+food="Alimentation naturelle"
+infusion="Infusion thym + citron"
+products="<div class='product'>Infusion Détox Maison Yanna</div>"
+}
+
+document.getElementById("terrain").innerText=terrain
+document.getElementById("plants").innerText=plants
+document.getElementById("food").innerText=food
+document.getElementById("infusion").innerText=infusion
+document.getElementById("products").innerHTML=products
+
+document.getElementById("result").style.display="block"
+
+historyData.push(input)
+localStorage.setItem("diagnostic_history", JSON.stringify(historyData))
+updateHistory()
+
+}
+
+
+</script>
+
+</body>
+</html>
