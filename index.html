@@ -1,0 +1,578 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+<title>Diagnostic Végétal – V10 Ultra Premium</title>
+
+<style>
+*{box-sizing:border-box;-webkit-font-smoothing:antialiased}
+html,body{width:100%;overflow-x:hidden}
+body{
+  font-family:Inter,Arial,sans-serif;
+  background:linear-gradient(180deg,#e6e0d4 0%,#f1ede4 24%,#f8f6f1 100%);
+  margin:0;
+  padding:0;
+  min-height:100vh;
+  color:#2f281f;
+}
+.container{
+  width:100%;
+  max-width:100%;
+  margin:auto;
+  background:rgba(255,255,255,.86);
+  backdrop-filter:blur(8px);
+  padding:0 0 110px;
+}
+.app-shell{position:relative;overflow:hidden;min-height:100vh}
+.device-glow{
+  position:absolute;inset:0;pointer-events:none;
+  background:
+  radial-gradient(circle at top right, rgba(123,146,124,.12), transparent 24%),
+  radial-gradient(circle at 0% 30%, rgba(198,182,163,.18), transparent 28%);
+}
+.hero-botanical{
+  position:absolute; inset:0; pointer-events:none; opacity:.55;
+  background:
+  radial-gradient(circle at 8% 10%, rgba(123,146,124,.10), transparent 20%),
+  radial-gradient(circle at 92% 14%, rgba(123,146,124,.08), transparent 18%),
+  radial-gradient(circle at 85% 78%, rgba(173,154,133,.10), transparent 20%),
+  radial-gradient(circle at 14% 82%, rgba(173,154,133,.08), transparent 18%);
+}
+.fullscreen-wrap{
+  position:relative;
+  min-height:100vh;
+  padding:22px 18px 120px;
+  display:flex;
+  flex-direction:column;
+}
+.app-panel{width:100%;max-width:760px;margin:0 auto}
+.pro-card{
+  transition:transform .28s ease, box-shadow .28s ease, opacity .4s ease;
+  animation:fadeLift .55s ease both;
+}
+@keyframes fadeLift{
+  from{opacity:0;transform:translateY(14px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.luxe-outline{position:relative}
+.luxe-outline:before{
+  content:"";position:absolute;inset:1px;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(180deg, rgba(255,255,255,.26), transparent 32%);
+  mix-blend-mode:screen;
+}
+.hero-panel{
+  padding:26px 22px 22px;
+  border-radius:0 0 32px 32px;
+  background:linear-gradient(180deg, rgba(255,254,251,.84) 0%, rgba(255,252,247,.98) 100%);
+  backdrop-filter:blur(10px);
+  box-shadow:0 24px 60px rgba(51,42,31,.07);
+}
+.input-panel{
+  margin-top:18px;
+  padding:20px 18px 22px;
+  border-radius:28px;
+  background:linear-gradient(180deg,rgba(255,253,250,.98) 0%,rgba(252,248,243,.98) 100%);
+  box-shadow:0 22px 54px rgba(30,24,20,.08);
+  border:1px solid rgba(120,100,82,.08);
+}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:2px 0 18px}
+.topbar-left{display:flex;flex-direction:column;gap:6px}
+.kicker{font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:800;color:#a39a8d}
+.brand-script{font-family:"Playfair Display", Georgia, serif;font-size:18px;font-style:italic;color:#5e755f;font-weight:700}
+.floating-chip{
+  display:inline-flex;align-items:center;justify-content:center;padding:8px 12px;border-radius:999px;
+  background:#eef4ef;color:#55705a;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase
+}
+.app-heading{
+  font-family:"Playfair Display", Georgia, serif;
+  font-size:58px;line-height:.98;letter-spacing:-.03em;margin:0;color:#2e271f;text-align:center
+}
+.app-subtitle{
+  font-size:19px;line-height:1.7;color:#736b62;max-width:680px;margin:16px auto 0;text-align:center
+}
+.input-title{
+  text-align:center;font-size:24px;font-weight:800;color:#2f281f;margin:0 0 16px
+}
+textarea{
+  width:100%;max-width:100%;display:block;resize:none;
+  padding:18px;border-radius:22px;border:1px solid #ddd8cf;font-size:16px;margin-top:10px;
+  background:linear-gradient(180deg,#fffdfa 0%,#fcfaf6 100%);
+  box-shadow:inset 0 1px 3px rgba(0,0,0,.02);outline:none;
+  transition:border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+  min-height:110px;color:#2f281f
+}
+textarea:focus{border-color:#6b856f;box-shadow:0 0 0 4px rgba(87,112,92,.10)}
+button,.primary-link,.tap-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  margin-top:20px;padding:15px 26px;background:linear-gradient(180deg,#58705c 0%,#425746 100%);
+  color:white;border:none;border-radius:999px;font-size:16px;font-weight:700;cursor:pointer;
+  box-shadow:0 10px 24px rgba(67,87,70,.18);
+  transition:border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+  text-decoration:none;
+}
+button:hover,.primary-link:hover,.tap-btn:hover{transform:translateY(-1px)}
+.secondary-btn{
+  background:#efeae1;color:#4f5d50;box-shadow:none;border:1px solid rgba(120,100,82,.10)
+}
+.content-panel{margin-top:18px;padding:0 4px}
+.card-block{
+  margin-top:22px;padding:28px;background:linear-gradient(180deg,#fbfbf8 0%,#f8f6f1 100%);
+  border-radius:24px;box-shadow:0 12px 28px rgba(0,0,0,.05)
+}
+.badge{
+  display:inline-block;padding:8px 12px;background:#e8efe8;border-radius:999px;font-size:12px;font-weight:700;
+  margin-bottom:12px;color:#43604a;letter-spacing:.02em
+}
+.section{margin-top:28px}
+.section-title{
+  margin:0 0 10px;font-size:22px;font-family:'Playfair Display',Georgia,serif;color:#2f281f
+}
+.section-note{margin:0 0 6px;color:#7a7268;font-size:14px}
+.result-card{
+  padding:22px 18px;border-radius:22px;background:linear-gradient(180deg,#fffdfa 0%,#f7f3ed 100%);
+  border:1px solid rgba(120,100,82,.08);box-shadow:0 10px 30px rgba(0,0,0,.04)
+}
+.product{
+  background:linear-gradient(180deg,#eef4ef 0%,#e8efe9 100%);
+  padding:12px 14px;border-radius:12px;margin-top:8px;border:1px solid rgba(87,112,92,.08)
+}
+.paywall,.history,.consult,.premium-protocol,.loading-card{
+  margin-top:30px;padding:26px;border-radius:24px;box-shadow:0 10px 24px rgba(0,0,0,.04)
+}
+.paywall{
+  background:linear-gradient(180deg,#f8fbf8 0%,#f3f8f4 100%);
+  border:1px solid #dfe9e2
+}
+.offer-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:16px
+}
+.offer-card{
+  background:white;border:1px solid #dde7df;border-radius:20px;padding:18px;box-shadow:0 10px 24px rgba(0,0,0,.04)
+}
+.offer-title{font-size:20px;font-weight:800;color:#244a2f;margin:0 0 8px;line-height:1.2}
+.offer-price{font-size:34px;font-weight:800;color:#2e5e3a;margin:0 0 10px;font-family:"Playfair Display", Georgia, serif}
+.offer-desc{font-size:14px;line-height:1.6;color:#58635b;min-height:72px}
+.link-btn{
+  display:inline-flex;align-items:center;justify-content:center;text-decoration:none;margin-top:14px;padding:13px 18px;
+  background:linear-gradient(180deg,#58705c 0%,#425746 100%);color:#fff;border-radius:999px;font-weight:800;
+  letter-spacing:.01em;box-shadow:0 8px 20px rgba(67,87,70,.18);width:100%
+}
+.small-note{font-size:14px;color:#6b746d;line-height:1.65;margin-top:10px}
+.history{
+  background:linear-gradient(180deg,#fbfbfb 0%,#f6f6f3 100%);
+  border:1px solid rgba(120,100,82,.07)
+}
+.consult{
+  background:linear-gradient(180deg,#f1f7f2 0%,#edf4ee 100%);
+  border:1px solid rgba(87,112,92,.09)
+}
+.loading-card{
+  display:none;
+  background:linear-gradient(180deg,#fffdf9 0%,#f7f2ea 100%);
+  border:1px solid rgba(120,100,82,.08);
+  text-align:center
+}
+.loader-ring{
+  width:92px;height:92px;margin:0 auto 18px;border-radius:50%;
+  border:8px solid #e6e0d7;border-top-color:#58705c;animation:spin 1s linear infinite
+}
+.loader-steps{
+  display:grid;gap:8px;max-width:320px;margin:16px auto 0;color:#6e675d;font-size:15px
+}
+.loader-step{padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.75)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.success-banner{
+  display:none;margin-top:16px;padding:14px 16px;border-radius:16px;background:#eef7ef;
+  border:1px solid rgba(87,112,92,.12);color:#43604a;font-weight:700
+}
+.premium-protocol{
+  display:none;
+  background:linear-gradient(180deg,#fffdf9 0%,#f6f1e8 100%);
+  border:1px solid rgba(120,100,82,.08)
+}
+.protocol-grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:16px}
+.protocol-block{
+  padding:16px;border-radius:18px;background:#fff;border:1px solid rgba(120,100,82,.08)
+}
+.protocol-title{margin:0 0 8px;font-size:18px;font-weight:800;color:#2f281f}
+.protocol-text{font-size:15px;line-height:1.7;color:#6d6459}
+.protocol-chip{
+  display:inline-flex;padding:7px 11px;border-radius:999px;background:#eef4ef;color:#55705a;font-size:11px;
+  font-weight:800;letter-spacing:.06em;text-transform:uppercase
+}
+.bottom-nav{
+  position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:100%;
+  background:rgba(255,255,255,.94);backdrop-filter:blur(20px);border-top:1px solid rgba(120,100,82,.08);
+  padding:12px 12px calc(18px + env(safe-area-inset-bottom));display:flex;justify-content:space-between;gap:8px;
+  z-index:40
+}
+.nav-pill{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#a59b8f;
+  font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:8px 6px;border-radius:16px
+}
+.nav-pill.active{background:#eef4ef;color:#55705a}
+.nav-icon{font-size:18px;line-height:1}
+@media (min-width: 431px){body{padding:24px}}
+@media (max-width: 768px){
+  body{padding:0;display:block}
+  .container{padding:0 0 110px;border-radius:0}
+  .fullscreen-wrap{padding:18px 14px 120px}
+  .hero-panel{padding:22px 16px 18px;border-radius:0 0 28px 28px}
+  .input-panel{padding:18px 14px 20px;border-radius:24px}
+  h1,.app-heading{font-size:42px}
+  .app-subtitle{font-size:17px}
+  .offer-grid{grid-template-columns:1fr}
+  button,.link-btn,.tap-btn,.primary-link{width:100%;text-align:center;box-sizing:border-box}
+  .card-block,.history,.consult,.paywall,.premium-protocol,.loading-card{padding:18px;border-radius:22px}
+  .section-title{font-size:17px}
+  .offer-price{font-size:30px}
+}
+@media (min-width:769px){
+  .bottom-nav{max-width:760px;border-radius:22px 22px 0 0}
+}
+</style>
+</head>
+<body>
+
+<div class="container app-shell">
+  <div class="device-glow"></div>
+  <div class="hero-botanical"></div>
+
+  <div class="fullscreen-wrap">
+    <div class="app-panel">
+
+      <!-- ENTRANCE PRESERVED -->
+      <section class="hero-panel pro-card luxe-outline">
+        <div class="topbar">
+          <div class="topbar-left">
+            <div class="kicker">Application premium</div>
+            <div class="brand-script">Méthode Tee</div>
+          </div>
+          <div class="floating-chip">V10</div>
+        </div>
+
+        <div style="text-align:center">
+          <h1 class="app-heading">Diagnostic Végétal</h1>
+          <div style="width:84px;height:4px;border-radius:999px;background:linear-gradient(90deg,#6b846c,#d8c7af);margin:16px auto 0"></div>
+          <p class="app-subtitle">Décris simplement ton ressenti pour recevoir une première lecture inspirée de la pharmacopée traditionnelle&nbsp;: terrain, plantes, alimentation, rituel et sélection Maison Yanna.</p>
+        </div>
+      </section>
+
+      <section class="input-panel pro-card luxe-outline">
+        <p class="input-title">Décris ton symptôme</p>
+        <p style="text-align:center;margin:0 0 14px;color:#7a7166;font-size:15px;line-height:1.6">Écris librement ce que tu ressens. L’app te propose ensuite une première lecture terrain, plantes, alimentation et rituels.</p>
+
+        <textarea id="symptom" placeholder="ex : j’ai mal au ventre, je suis fatiguée, j’ai des infections urinaires, je dors mal..."></textarea>
+        <div style="text-align:center"><button onclick="diagnose()">Lancer l’analyse</button></div>
+      </section>
+
+      <div class="content-panel">
+
+        <div id="loadingCard" class="loading-card pro-card luxe-outline">
+          <div class="loader-ring"></div>
+          <h3 style="font-family:'Playfair Display',Georgia,serif;font-size:30px;margin:0 0 8px">Analyse en cours…</h3>
+          <p class="small-note" style="margin-top:0">Lecture du terrain végétal en style app santé premium.</p>
+          <div class="loader-steps">
+            <div class="loader-step">🌿 Analyse du terrain</div>
+            <div class="loader-step">🍵 Lecture pharmacopée</div>
+            <div class="loader-step">🥗 Interprétation alimentaire</div>
+            <div class="loader-step">🧬 Génération du protocole</div>
+          </div>
+        </div>
+
+        <div id="result" class="card-block pro-card luxe-outline" style="display:none">
+          <div class="badge" id="terrain"></div>
+
+          <div class="section">
+            <h3 class="section-title">🌿 Plantes recommandées</h3>
+            <p class="section-note">Première sélection végétale selon ton ressenti.</p>
+            <div id="plants" class="result-card"></div>
+          </div>
+
+          <div class="section">
+            <h3 class="section-title">🥗 Conseils alimentaires</h3>
+            <p class="section-note">Repères alimentaires simples à appliquer.</p>
+            <div id="food" class="result-card"></div>
+          </div>
+
+          <div class="section">
+            <h3 class="section-title">🍵 Rituel / Infusion</h3>
+            <p class="section-note">Rituel doux inspiré de la tradition végétale.</p>
+            <div id="infusion" class="result-card"></div>
+          </div>
+
+          <div class="section">
+            <h3 class="section-title">🛍 Produits Maison Yanna recommandés</h3>
+            <p class="section-note">Produits cohérents avec la lecture proposée.</p>
+            <div id="products"></div>
+          </div>
+        </div>
+
+        <div id="premiumSuccess" class="success-banner">Paiement détecté. Ton protocole complet est maintenant débloqué sur cet appareil.</div>
+
+        <div id="premiumProtocol" class="premium-protocol pro-card luxe-outline">
+          <div>
+            <div class="protocol-chip">Protocole complet</div>
+            <h3 style="font-size:30px;font-family:'Playfair Display',Georgia,serif;margin:10px 0 6px;color:#2f281f">Analyse approfondie</h3>
+            <p class="small-note" style="margin:0">Lecture détaillée du terrain, plantes précises, infusion exacte, alimentation ciblée et routine 7 jours.</p>
+          </div>
+
+          <div class="protocol-grid">
+            <div class="protocol-block">
+              <h4 class="protocol-title">🌿 Plantes détaillées</h4>
+              <div id="premiumPlants" class="protocol-text"></div>
+            </div>
+
+            <div class="protocol-block">
+              <h4 class="protocol-title">🍵 Infusion exacte</h4>
+              <div id="premiumInfusion" class="protocol-text"></div>
+            </div>
+
+            <div class="protocol-block">
+              <h4 class="protocol-title">🥗 Alimentation précise</h4>
+              <div id="premiumFood" class="protocol-text"></div>
+            </div>
+
+            <div class="protocol-block">
+              <h4 class="protocol-title">🧬 Protocole 7 jours</h4>
+              <div id="premiumWeek" class="protocol-text"></div>
+            </div>
+
+            <div class="protocol-block">
+              <h4 class="protocol-title">⏱ Moyen d’utilisation / routine</h4>
+              <div id="premiumUsage" class="protocol-text"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="paywall" class="paywall pro-card luxe-outline" style="display:none">
+          <h3 style="font-size:28px;font-family:'Playfair Display', Georgia, serif;margin:0 0 6px;color:#2f281f">Aller plus loin avec Méthode Tee</h3>
+          <p class="small-note">Tu as reçu un premier niveau de lecture gratuit. Si tu veux aller plus loin avec un accompagnement plus poussé, tu peux maintenant choisir l’une de ces options.</p>
+
+          <div class="offer-grid">
+            <div class="offer-card">
+              <p class="offer-title">Protocole végétal</p>
+              <p class="offer-price">5€</p>
+              <p class="offer-desc">Débloque le protocole complet : analyse approfondie, plantes détaillées, infusion exacte, alimentation ciblée, protocole 7 jours et routine.</p>
+              <a class="link-btn" href="https://buy.stripe.com/7sY8wP47ugTbd4e5yN3Ru03" target="_blank" rel="noopener noreferrer">Débloquer le protocole</a>
+              <button class="secondary-btn" onclick="confirmPaid()" style="width:100%;margin-top:10px">J’ai déjà payé</button>
+            </div>
+
+            <div class="offer-card">
+              <p class="offer-title">Consultation pharmacopée</p>
+              <p class="offer-price">49€</p>
+              <p class="offer-desc">Réserve un échange personnalisé avec Tee pour une approche plus précise selon ton terrain, ton rythme et tes besoins.</p>
+              <a class="link-btn" href="https://buy.stripe.com/8x2dR9gUgeL3ggqgdr3Ru04" target="_blank" rel="noopener noreferrer">Réserver la consultation</a>
+            </div>
+
+            <div class="offer-card">
+              <p class="offer-title">Club Méthode Tee</p>
+              <p class="offer-price">15€/mois</p>
+              <p class="offer-desc">Accès mensuel aux rituels, diagnostics, recettes, plantes et conseils exclusifs dans l’univers Méthode Tee.</p>
+              <a class="link-btn" href="https://buy.stripe.com/cNi5kD5by46pe8i0et3Ru05" target="_blank" rel="noopener noreferrer">Rejoindre le club</a>
+            </div>
+          </div>
+        </div>
+
+        <div id="historyWrap" class="history pro-card luxe-outline" style="display:none">
+          <h3 style="font-size:28px;font-family:'Playfair Display', Georgia, serif;margin:0 0 6px;color:#2f281f">Historique des diagnostics</h3>
+          <ul id="history" style="margin:10px 0 0;padding-left:22px;line-height:1.8"></ul>
+        </div>
+
+        <div id="consultWrap" class="consult pro-card luxe-outline" style="display:none">
+          <h3 style="font-size:28px;font-family:'Playfair Display', Georgia, serif;margin:0 0 6px;color:#2f281f">Consultation personnalisée</h3>
+          <p>Besoin d’un accompagnement plus précis ? Tu peux réserver directement ta consultation pharmacopée avec Tee.</p>
+          <a class="tap-btn" href="https://buy.stripe.com/8x2dR9gUgeL3ggqgdr3Ru04" target="_blank" rel="noopener noreferrer">Réserver une consultation</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="bottom-nav">
+    <div class="nav-pill active"><div class="nav-icon">🌿</div><div>Diagnostic</div></div>
+    <div class="nav-pill"><div class="nav-icon">🍵</div><div>Rituels</div></div>
+    <div class="nav-pill"><div class="nav-icon">🛍</div><div>Produits</div></div>
+    <div class="nav-pill"><div class="nav-icon">💎</div><div>Premium</div></div>
+  </nav>
+</div>
+
+<script>
+const premiumProtocols = {
+  digestif: {
+    plants: "Fenouil, menthe poivrée et gingembre en priorité. Camomille en soutien le soir si la digestion ralentit ou si le ventre est tendu.",
+    infusion: "Infusion exacte : 1 c. à café fenouil + 4 à 5 feuilles de menthe + 2 à 3 fines rondelles de gingembre frais. Infuser 8 minutes.",
+    food: "Privilégier légumes cuits, riz, patate douce, compote sans sucre ajouté, protéines simples. Réduire fritures, laitages lourds et excès de sucre.",
+    week: "Jours 1 à 3 : alimentation simple et cuite.<br>Jours 4 à 5 : réintroduire crudités douces en petite quantité.<br>Jours 6 à 7 : stabiliser avec repas réguliers et dîner léger.",
+    usage: "Matin : eau tiède puis petit-déjeuner léger.<br>Après déjeuner : infusion digestive.<br>Soir : dîner plus simple, infusion 30 min après le repas."
+  },
+  fatigue: {
+    plants: "Ortie pour reminéraliser, romarin pour stimuler, ashwagandha ou ginseng en soutien selon le niveau d’épuisement.",
+    infusion: "Infusion exacte : 1 c. à café ortie + 1 petite branche de romarin. Infuser 10 minutes. Option gingembre le matin.",
+    food: "Accent sur protéines, œufs, légumineuses, fruits secs, dattes, bonnes graisses, repas réguliers. Éviter le saut de repas et les pics de sucre.",
+    week: "Jours 1 à 2 : relancer avec petit-déjeuner solide.<br>Jours 3 à 5 : ajouter une collation stratégique.<br>Jours 6 à 7 : consolider sommeil, hydratation et densité nutritionnelle.",
+    usage: "Matin : infusion tonique après un verre d’eau.<br>Midi : repas riche en protéines + glucides de qualité.<br>16h : fruit + oléagineux ou dattes.<br>Soir : dîner nourrissant mais digeste."
+  },
+  urinaire: {
+    plants: "Queues de cerise, canneberge et busserole selon sensibilité. Hydratation constante tout au long de la journée.",
+    infusion: "Infusion exacte : queues de cerise + hibiscus léger. Infuser 10 minutes. Boire tiède ou refroidi dans la journée.",
+    food: "Hydratation élevée, limiter excès de sucre, privilégier fruits riches en eau, bouillons légers, repas peu irritants.",
+    week: "Jours 1 à 3 : hydratation renforcée.<br>Jours 4 à 5 : maintenir infusion 2 fois par jour.<br>Jours 6 à 7 : stabiliser avec alimentation simple et bonne hydratation.",
+    usage: "Matin : grand verre d’eau dès le réveil.<br>Journée : infusion en 2 prises.<br>Soir : éviter boissons irritantes et trop sucrées."
+  },
+  nerveux: {
+    plants: "Passiflore, mélisse, aubépine. Verveine le soir pour installer un rythme plus apaisé.",
+    infusion: "Infusion exacte : passiflore + verveine + mélisse. Infuser 8 à 10 minutes, idéalement après le dîner.",
+    food: "Repas plus réguliers, moins de café, dîner léger, collation douce si fin de journée nerveuse.",
+    week: "Jours 1 à 2 : réduire les excitants.<br>Jours 3 à 5 : installer rituel du soir constant.<br>Jours 6 à 7 : consolider avec respiration + infusion + coucher plus stable.",
+    usage: "Après-midi : éviter surcharge caféine.<br>Soir : infusion 45 minutes avant le coucher.<br>Pendant 7 jours : garder le même horaire de sommeil autant que possible."
+  },
+  general: {
+    plants: "Ortie, thym et romarin comme base douce d’équilibre. Ajuster ensuite selon le besoin dominant.",
+    infusion: "Infusion exacte : thym + romarin léger + citron après infusion.",
+    food: "Alimentation simple, naturelle, structurée, riche en légumes, protéines, bons lipides et hydratation stable.",
+    week: "7 jours d’ancrage : régularité, repas simples, hydratation, rituel du soir léger.",
+    usage: "Matin : eau puis repas simple.<br>Midi : assiette complète.<br>Soir : infusion de clôture et dîner plus léger."
+  }
+};
+
+let historyData = JSON.parse(localStorage.getItem("diagnostic_history") || "[]");
+let currentDiagnosticKey = "general";
+
+function updateHistory(){
+  const list=document.getElementById("history");
+  list.innerHTML="";
+  historyData.forEach(item=>{
+    const li=document.createElement("li");
+    li.innerText=item;
+    list.appendChild(li);
+  });
+}
+
+function setProtocolFor(key){
+  const p = premiumProtocols[key] || premiumProtocols.general;
+  document.getElementById("premiumPlants").innerHTML = p.plants;
+  document.getElementById("premiumInfusion").innerHTML = p.infusion;
+  document.getElementById("premiumFood").innerHTML = p.food;
+  document.getElementById("premiumWeek").innerHTML = p.week;
+  document.getElementById("premiumUsage").innerHTML = p.usage;
+}
+
+function unlockPremium(showBanner=false){
+  localStorage.setItem("premium_protocol_unlocked","true");
+  document.getElementById("premiumProtocol").style.display="block";
+  if(showBanner){
+    document.getElementById("premiumSuccess").style.display="block";
+  }
+}
+
+function confirmPaid(){
+  unlockPremium(true);
+  document.getElementById("premiumProtocol").scrollIntoView({behavior:"smooth", block:"start"});
+}
+
+function checkAutoUnlock(){
+  const params = new URLSearchParams(window.location.search);
+  if(params.get("paid")==="protocole" || params.get("premium")==="1" || params.get("paid")==="true"){
+    unlockPremium(true);
+  } else if(document.referrer && document.referrer.includes("stripe.com")){
+    unlockPremium(true);
+  } else if(localStorage.getItem("premium_protocol_unlocked")==="true"){
+    unlockPremium(false);
+  }
+}
+
+function diagnose(){
+  const raw=document.getElementById("symptom").value.trim();
+  if(!raw){
+    alert("Décris d’abord ton symptôme ou ton ressenti.");
+    return;
+  }
+
+  document.getElementById("loadingCard").style.display="block";
+  document.getElementById("result").style.display="none";
+  document.getElementById("paywall").style.display="none";
+  document.getElementById("historyWrap").style.display="none";
+  document.getElementById("consultWrap").style.display="none";
+  document.getElementById("premiumSuccess").style.display="none";
+
+  setTimeout(() => {
+    const input=raw.toLowerCase();
+    let terrain="";
+    let plants="";
+    let food="";
+    let infusion="";
+    let products="";
+
+    if(input.includes("ventre") || input.includes("digestion") || input.includes("ballonne") || input.includes("ballonné")){
+      terrain="Terrain digestif";
+      currentDiagnosticKey="digestif";
+      plants="Fenouil, Menthe poivrée, Gingembre";
+      food="Repas simples, légumes cuits";
+      infusion="Infusion fenouil + menthe";
+      products="<div class='product'>Infusion Fenouil Maison Yanna</div><div class='product'>Tisane Digestion Maison Yanna</div>";
+    } else if(input.includes("fatigue") || input.includes("fatigué") || input.includes("fatiguee") || input.includes("fatiguée") || input.includes("epuise") || input.includes("épuisé") || input.includes("épuisée")){
+      terrain="Terrain vitalité basse";
+      currentDiagnosticKey="fatigue";
+      plants="Ortie, Ginseng, Ashwagandha";
+      food="Fruits secs, dattes, protéines";
+      infusion="Infusion ortie + gingembre";
+      products="<div class='product'>Maté Boost Maison Yanna</div><div class='product'>Matcha Éclat Taïshan</div>";
+    } else if(input.includes("urinaire") || input.includes("infection") || input.includes("cystite")){
+      terrain="Terrain urinaire sensible";
+      currentDiagnosticKey="urinaire";
+      plants="Busserole, Canneberge, Queue de cerise";
+      food="Hydratation importante";
+      infusion="Infusion queues de cerise";
+      products="<div class='product'>Queues de Cerise Maison Yanna</div><div class='product'>Infusion Cranberry</div>";
+    } else if(input.includes("stress") || input.includes("sommeil") || input.includes("anx") || input.includes("insom")){
+      terrain="Terrain nerveux";
+      currentDiagnosticKey="nerveux";
+      plants="Passiflore, Aubépine, Mélisse";
+      food="Repas léger le soir";
+      infusion="Infusion verveine + passiflore";
+      products="<div class='product'>Infusion Lune Céleste Maison Yanna</div>";
+    } else {
+      terrain="Terrain général";
+      currentDiagnosticKey="general";
+      plants="Ortie, Thym, Romarin";
+      food="Alimentation naturelle";
+      infusion="Infusion thym + citron";
+      products="<div class='product'>Infusion Détox Maison Yanna</div>";
+    }
+
+    document.getElementById("terrain").innerText=terrain;
+    document.getElementById("plants").innerText=plants;
+    document.getElementById("food").innerText=food;
+    document.getElementById("infusion").innerText=infusion;
+    document.getElementById("products").innerHTML=products;
+
+    setProtocolFor(currentDiagnosticKey);
+
+    document.getElementById("loadingCard").style.display="none";
+    document.getElementById("result").style.display="block";
+    document.getElementById("paywall").style.display="block";
+    document.getElementById("historyWrap").style.display="block";
+    document.getElementById("consultWrap").style.display="block";
+
+    historyData.push(raw);
+    localStorage.setItem("diagnostic_history", JSON.stringify(historyData));
+    updateHistory();
+    checkAutoUnlock();
+
+    setTimeout(() => {
+      document.getElementById("result").scrollIntoView({behavior:"smooth", block:"start"});
+    }, 120);
+  }, 2200);
+}
+
+updateHistory();
+checkAutoUnlock();
+</script>
+
+</body>
+</html>
